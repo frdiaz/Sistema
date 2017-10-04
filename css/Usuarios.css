@@ -1,0 +1,13 @@
+﻿#dvUsuarios{
+    position:relative !important;
+}
+
+#dvNuevoUsuario{
+    margin-top:-250px;
+    background-position:center;
+}
+
+#dvEditarUsuario{
+    margin-top:-500px;
+    background-position:center;
+}
