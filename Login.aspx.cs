@@ -35,15 +35,17 @@ public partial class Login : System.Web.UI.Page
 
     private void BtnLogin_Click(object sender, EventArgs e)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@email", DbType.String, txtEmail.Text));
-        Parametros.Add(new Parametro("@password", DbType.String, txtPassword.Text));
-
         DataSet ds = new DataSet();
         int identificador = 0;
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_Login", ConfigurationManager.AppSettings["Sistema"]);
+        Tab_usuario usuarios = new Tab_usuario();
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
 
-        if(ds != null)
+        usuarios.Email = txtEmail.Text;
+        usuarios.Contrasena = txtPassword.Text;
+
+        ds = metodosUsuarios.login(usuarios);
+
+        if (ds != null)
         {
             foreach (DataRow item in ds.Tables[0].Rows)
             {
@@ -64,12 +66,12 @@ public partial class Login : System.Web.UI.Page
 
     public void mensajeError(int numeroError)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@numeroError", DbType.Int32, numeroError));
-        
-
+        Tab_alertas alertas = new Tab_alertas();
+        MetodosTabAlertas metodosAlertas = new MetodosTabAlertas();
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_MensajesError", ConfigurationManager.AppSettings["Sistema"]);
+        alertas.Id_alerta = numeroError;
+
+        ds = metodosAlertas.obtenerAlertaPorID(alertas);
 
         if (ds != null)
         {

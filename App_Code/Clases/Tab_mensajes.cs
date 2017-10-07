@@ -6,8 +6,8 @@ using System.Collections.Generic;
 public class Tab_mensajes
 {
 	private int id_Mensaje;
-	private string mensaje;
-	private  activo;
+	private string mensaje = "";
+	private int activo = 1;
 
 	public int Id_Mensaje
 	{
@@ -19,7 +19,7 @@ public class Tab_mensajes
 		get { return mensaje; }
 		set { mensaje = value; }
 	}
-	public  Activo
+	public int Activo
 	{
 		get { return activo; }
 		set { activo = value; }

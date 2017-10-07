@@ -6,8 +6,8 @@ using System.Collections.Generic;
 public class Tab_alertas
 {
     private int id_alerta;
-    private string mensaje;
-    private string descripcion;
+    private string mensaje = "";
+    private string descripcion = "";
 
     public int Id_alerta
     {

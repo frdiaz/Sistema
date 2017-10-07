@@ -33,11 +33,12 @@ public partial class Perfil : System.Web.UI.Page
     {
         string json = "";
         
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID_USUARIO", DbType.Int32, id_usuario));
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 2));
+        Tab_usuario usuarios = new Tab_usuario();
+        MetodosTabUsuario metodosUsuario = new MetodosTabUsuario();
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_DatosPrincipales", ConfigurationManager.AppSettings["Sistema"]);
+
+        usuarios.Id_usuario = Convert.ToInt32(id_usuario);
+        ds = metodosUsuario.obtenerDatosEspecificos(usuarios, 2);
 
         if (ds != null)
         {
@@ -64,12 +65,15 @@ public partial class Perfil : System.Web.UI.Page
     public static bool actualizarPassword(int id_usuario, string password)
     {
         bool resultado = true;
-
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID_USUARIO", DbType.Int32, id_usuario));
-        Parametros.Add(new Parametro("@PASSWORD", DbType.String, password));
+        
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ACTUALIZARPASSWORD", ConfigurationManager.AppSettings["Sistema"]);
+        Tab_usuario usuarios = new Tab_usuario();
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+
+        usuarios.Contrasena = password;
+        usuarios.Id_usuario = id_usuario;
+
+        ds = metodosUsuarios.actualizarPassword(usuarios);
 
         if(ds != null)
         {
@@ -85,6 +89,7 @@ public partial class Perfil : System.Web.UI.Page
         {
             resultado = false;
         }
+
         return resultado;
     }
 
@@ -92,20 +97,16 @@ public partial class Perfil : System.Web.UI.Page
     public static bool actualizarDatos(int id_usuario, string email, string direccion, string fono)
     {
         bool resultado = true;
-
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID_USUARIO", DbType.Int32, id_usuario));
-        Parametros.Add(new Parametro("@EMAIL", DbType.String, email));
-        Parametros.Add(new Parametro("@DIRECCION", DbType.String, direccion));
-
-        if(fono == "")
-        {
-            fono = "0";
-        }
-
-        Parametros.Add(new Parametro("@FONO", DbType.Int32, Convert.ToInt32(fono)));
+        Tab_usuario usuarios = new Tab_usuario();
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ACTUALIZARDATOS", ConfigurationManager.AppSettings["Sistema"]);
+
+        usuarios.Id_usuario = id_usuario;
+        usuarios.Email = email;
+        usuarios.Direccion = direccion;
+        usuarios.Fono = Convert.ToInt32(fono);
+
+        ds = metodosUsuarios.actualizarDatos(usuarios);
 
         if (ds != null)
         {

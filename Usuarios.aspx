@@ -20,7 +20,7 @@
     <h3 style="margin-left: 20px; margin-top: 0px;">Administración<small> Usuarios</small></h3>
 
     <button type="button" class="btn btn-primary" onclick="nuevoUsuario_show();" style="margin-left: 20px;">Nuevo Usuario</button>
-    <button type="button" class="btn btn-primary" onclick="mostrarUsuarios_show();" style="margin-left: 20px;">Mostrar Usuarios</button>
+    <button type="button" class="btn btn-primary" onclick="Usuarios_show();" style="margin-left: 20px;">Mostrar Usuarios</button>
     <section class="content">
         <div class="row" id="dvUsuarios">
             <div class="col-xs-12">
@@ -163,14 +163,6 @@
                             <label>Fono</label>
                             <input type="number" class="form-control" id="txtFonoEditar" placeholder="Telefono" maxlength="10">
                         </div>
-                        <%--<div class="form-group">
-                            <label>Sexo</label>
-                            <select class="form-control" id="slSexo">
-                                <option value="2">Seleccione</option>
-                                <option value="0">Femenino</option>
-                                <option value="1">Masculino</option>
-                            </select>
-                        </div>--%>
                         <div class="form-group">
                             <label>Estado</label>
                             <label style="color: red">(*)</label>

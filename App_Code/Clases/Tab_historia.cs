@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Tab_historia
 {
 	private int id_Historial;
-	private DateTime Fecha;
+	private DateTime fecha = DateTime.Now;
 	private int id_Mensaje;
 
 	public int Id_Historial
@@ -16,8 +16,8 @@ public class Tab_historia
 	}
 	public DateTime Fecha
 	{
-		get { return Fecha; }
-		set { Fecha = value; }
+		get { return fecha; }
+		set { fecha = value; }
 	}
 	public int Id_Mensaje
 	{

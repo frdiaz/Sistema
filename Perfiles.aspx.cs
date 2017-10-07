@@ -19,6 +19,36 @@ public partial class Perfiles : Page
     }
 
     [WebMethod]
+    public static ArrayList cargarVentanas()
+    {
+        DataTable dt = new DataTable();
+        ArrayList perfiles = new ArrayList();
+        dt.Columns.Add("id", typeof(int));
+        dt.Columns.Add("pagina", typeof(string));
+
+        procesaCargarVentanas(perfiles, dt);
+        return perfiles;
+    }
+    public static void procesaCargarVentanas(ArrayList perfiles, DataTable dt)
+    {
+        MetodosTabPagina metodosPaginas = new MetodosTabPagina();
+        DataSet ds = new DataSet();
+
+        ds = metodosPaginas.obtenerEspecifico();
+        if (ds != null)
+        {
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                int id = Convert.ToInt32(item["id"]);
+                string pagina = item["pagina"].ToString();
+
+                dt.Rows.Add(id, pagina);
+                perfiles.Add(new { id = id, pagina = pagina });
+            }
+        }
+    }
+
+    [WebMethod]
     public static ArrayList cargarTablaPerfiles()
     {
         DataTable dt = new DataTable();
@@ -35,11 +65,10 @@ public partial class Perfiles : Page
 
     public static void procesaPerfiles(ArrayList perfiles, DataTable dt)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 1));
-
+        MetodosTabPagina metodosPaginas = new MetodosTabPagina();
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros,"SP_ConsultaPerfiles", ConfigurationManager.AppSettings["Sistema"]);
+
+        ds = metodosPaginas.consultaPerfiles();
 
         if (ds != null)
         {
@@ -54,5 +83,4 @@ public partial class Perfiles : Page
             }
         }
     }
-
 }

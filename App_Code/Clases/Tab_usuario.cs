@@ -6,15 +6,15 @@ using System.Collections.Generic;
 public class Tab_usuario
 {
     private int id_usuario;
-    private string rut;
-    private string email;
-    private string nombre;
-    private string apellidoPaterno;
-    private string apellidoMaterno;
-    private string contrasena;
-    private string direccion;
-    private int fono;
-    private int activo;
+    private string rut = "";
+    private string email = "";
+    private string nombre = "";
+    private string apellidoPaterno = "";
+    private string apellidoMaterno = "";
+    private string contrasena = "";
+    private string direccion = "";
+    private int fono = 0;
+    private int activo = 1;
     private int id_rol;
 
     public int Id_usuario

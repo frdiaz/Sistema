@@ -6,11 +6,11 @@ using System.Collections.Generic;
 public class Tab_pagina
 {
 	private int id_pagina;
-	private string menu;
-	private string url;
-	private int activo;
-	private string class;
-	private string submenu;
+	private string menu = "";
+	private string url = "";
+	private int activo = 1;
+	private string clases = "";
+	private string submenu = "";
 
 	public int Id_pagina
 	{
@@ -32,10 +32,10 @@ public class Tab_pagina
 		get { return activo; }
 		set { activo = value; }
 	}
-	public string Class
+	public string Clases
 	{
-		get { return class; }
-		set { class = value; }
+		get { return clases; }
+		set { clases = value; }
 	}
 	public string Submenu
 	{

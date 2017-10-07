@@ -61,10 +61,13 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
 
     private void cargarMenus()
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID_USUARIO", DbType.Int32, Convert.ToInt32(Session["idUsuario"])));
+        Tab_usuario usuarios = new Tab_usuario();
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_CONSULTAMENU", ConfigurationManager.AppSettings["Sistema"]);
+
+        usuarios.Id_usuario = Convert.ToInt32(Session["idusuario"]);
+
+        ds = metodosUsuarios.obtenerPaginasPorIDUsuario(usuarios);
 
         int administracion = 0;
         int mailbox = 0;
@@ -121,11 +124,13 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
 
     private void cargarDatosPrincipales()
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID_USUARIO", DbType.Int32, Convert.ToInt32(Session["idUsuario"])));
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 1));
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_DatosPrincipales", ConfigurationManager.AppSettings["Sistema"]);
+        Tab_usuario usuarios = new Tab_usuario();
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+
+        usuarios.Id_usuario = Convert.ToInt32(Session["idUsuario"]);
+
+        ds = metodosUsuarios.obtenerDatosEspecificos(usuarios, 1);
 
         if (ds != null)
         {

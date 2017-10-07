@@ -28,13 +28,13 @@ public partial class Usuarios : System.Web.UI.Page
         HttpContext.Current.Session["DatatablePerfiles"] = dt;
         return perfiles;
     }
+
     public static void procesaPerfiles(ArrayList perfiles, DataTable dt)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 1));//1 = consulta id y nombre
-
+        MetodosTabRol metodosRol = new MetodosTabRol();
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ConsultaPerfiles", ConfigurationManager.AppSettings["Sistema"]);
+
+        ds = metodosRol.obtenerPerfiles();
 
         if (ds != null)
         {
@@ -61,7 +61,7 @@ public partial class Usuarios : System.Web.UI.Page
 
         ArrayList mensajes = new ArrayList();
 
-        procesaUsuarios(mensajes, dt);
+        obtenerUsuarios(mensajes, dt);
 
         HttpContext.Current.Session["Datatable"] = dt;
 
@@ -94,21 +94,13 @@ public partial class Usuarios : System.Web.UI.Page
 
     private static void procesaEditarUsuarios(ArrayList mensajes, DataTable dt, int id_usuario)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 3));//1=con fechas en el sp
-        Parametros.Add(new Parametro("@ID", DbType.Int32, id_usuario));
-        Parametros.Add(new Parametro("@RUT", DbType.String, ""));
-        Parametros.Add(new Parametro("@EMAIL", DbType.String, ""));
-        Parametros.Add(new Parametro("@NOMBRE", DbType.String, ""));
-        Parametros.Add(new Parametro("@APELLIDOPATERNO", DbType.String, ""));
-        Parametros.Add(new Parametro("@APELLIDOMATERNO", DbType.String, ""));
-        Parametros.Add(new Parametro("@CONTRASENA", DbType.String, ""));
-        Parametros.Add(new Parametro("@DIRECCION", DbType.String, ""));
-        Parametros.Add(new Parametro("@FONO", DbType.Int32, 0));
-        Parametros.Add(new Parametro("@IDROL", DbType.Int32, 0));
-
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_Usuario", ConfigurationManager.AppSettings["Sistema"]);
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+        Tab_usuario usuarios = new Tab_usuario();
+
+        usuarios.Id_usuario = id_usuario;
+
+        ds = metodosUsuarios.obtenerUsuario(usuarios);
 
         if (ds != null)
         {
@@ -131,35 +123,23 @@ public partial class Usuarios : System.Web.UI.Page
         }
     }
 
-    private static void procesaUsuarios(ArrayList mensajes, DataTable dt)
+    private static void obtenerUsuarios(ArrayList mensajes, DataTable dt)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 2));//1=con fechas en el sp
-        Parametros.Add(new Parametro("@ID", DbType.Int32, 0));
-        Parametros.Add(new Parametro("@RUT", DbType.String, ""));
-        Parametros.Add(new Parametro("@EMAIL", DbType.String, ""));
-        Parametros.Add(new Parametro("@NOMBRE", DbType.String, ""));
-        Parametros.Add(new Parametro("@APELLIDOPATERNO", DbType.String, ""));
-        Parametros.Add(new Parametro("@APELLIDOMATERNO", DbType.String, 1));
-        Parametros.Add(new Parametro("@CONTRASENA", DbType.String, ""));
-        Parametros.Add(new Parametro("@DIRECCION", DbType.String, ""));
-        Parametros.Add(new Parametro("@FONO", DbType.Int32, 0));
-        Parametros.Add(new Parametro("@IDROL", DbType.Int32, 0));
-
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_Usuario", ConfigurationManager.AppSettings["Sistema"]);
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+        ds = metodosUsuarios.obtenerUsuarios();
 
         if (ds != null)
         {
             foreach (DataRow item in ds.Tables[0].Rows)
             {
-                int id = Convert.ToInt32(item["id"]);
-                string rut = item["Rut"].ToString();
-                string nombre = item["Nombre"].ToString();
-                string email = item["Email"].ToString();
+                int id = Convert.ToInt32(item["id_usuario"]);
+                string rut = item["rut"].ToString();
+                string nombre = item["nombre"].ToString() + " " + item["apellidoPaterno"].ToString() + " " + item["apellidoPaterno"].ToString();
+                string email = item["email"].ToString();
                 string activo = "";
 
-                if(Convert.ToInt32(item["Activo"]) == 1)
+                if(Convert.ToInt32(item["activo"]) == 1)
                 {
                     activo = "Activa";
                 }
@@ -182,21 +162,22 @@ public partial class Usuarios : System.Web.UI.Page
         bool resultado = true;
 
         DataSet ds = new DataSet();
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.String, 1));
-        Parametros.Add(new Parametro("@ID", DbType.Int32, 0));
-        Parametros.Add(new Parametro("@RUT", DbType.String, rut));
-        Parametros.Add(new Parametro("@EMAIL", DbType.String, email));
-        Parametros.Add(new Parametro("@NOMBRE", DbType.String, nombre));
-        Parametros.Add(new Parametro("@APELLIDOPATERNO", DbType.String, apellidoPaterno));
-        Parametros.Add(new Parametro("@APELLIDOMATERNO", DbType.String, apellidoMaterno));
-        Parametros.Add(new Parametro("@CONTRASENA", DbType.String, password));
-        Parametros.Add(new Parametro("@DIRECCION", DbType.String, direccion));
-        Parametros.Add(new Parametro("@FONO", DbType.String, fono));
-        Parametros.Add(new Parametro("@IDROL", DbType.Int32, perfil));
 
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_Usuario", ConfigurationManager.AppSettings["Sistema"]);
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+        Tab_usuario usuarios = new Tab_usuario();
 
+        usuarios.Nombre = nombre;
+        usuarios.ApellidoPaterno = apellidoPaterno;
+        usuarios.ApellidoMaterno = apellidoMaterno;
+        usuarios.Email = email;
+        usuarios.Direccion = direccion;
+        usuarios.Fono = Convert.ToInt32(fono == "" ? fono = "0": fono);
+        usuarios.Contrasena = password;
+        usuarios.Rut = rut;
+        usuarios.Id_rol = perfil;
+
+        ds = metodosUsuarios.nuevoUsuario(usuarios);
+       
         if (ds != null)
         {
             foreach (DataRow item in ds.Tables[0].Rows)
@@ -217,10 +198,12 @@ public partial class Usuarios : System.Web.UI.Page
         bool resultado = false;
 
         DataSet ds = new DataSet();
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID_USUARIO", DbType.String, id_usuario));
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+        Tab_usuario usuarios = new Tab_usuario();
 
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_RESETEARPASSWORD", ConfigurationManager.AppSettings["Sistema"]);
+        usuarios.Id_usuario = id_usuario;
+
+        ds = metodosUsuarios.resetearPassword(usuarios);
 
         if (ds != null)
         {
@@ -242,26 +225,24 @@ public partial class Usuarios : System.Web.UI.Page
         string perfil, string estado)
     {
         bool resultado = true;
+        MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
+        Tab_usuario usuarios = new Tab_usuario();
+
+        usuarios.Id_usuario = id;
+        usuarios.Nombre = nombre;
+        usuarios.ApellidoPaterno = apellidoPaterno;
+        usuarios.ApellidoMaterno = apellidoMaterno;
+        usuarios.Rut = rut;
+        usuarios.Email = email;
+        usuarios.Direccion = direccion;
+        usuarios.Fono = Convert.ToInt32(fono);
+        usuarios.Id_rol = Convert.ToInt32(perfil);
+        usuarios.Activo = Convert.ToInt32(estado);
 
         DataSet ds = new DataSet();
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@ID", DbType.Int32, id));
-        Parametros.Add(new Parametro("@RUT", DbType.String, rut));
-        Parametros.Add(new Parametro("@EMAIL", DbType.String, email));
-        Parametros.Add(new Parametro("@NOMBRE", DbType.String, nombre));
-        Parametros.Add(new Parametro("@APELLIDOPATERNO", DbType.String, apellidoPaterno));
-        Parametros.Add(new Parametro("@APELLIDOMATERNO", DbType.String, apellidoMaterno));
-        Parametros.Add(new Parametro("@DIRECCION", DbType.String, direccion));
-        if(fono == "")
-        {
-            fono = "0";
-        }
-        Parametros.Add(new Parametro("@FONO", DbType.Int32, Convert.ToInt32(fono)));
-        Parametros.Add(new Parametro("@IDROL", DbType.Int32, Convert.ToInt32(perfil)));
-        Parametros.Add(new Parametro("@ACTIVO", DbType.Int32, Convert.ToInt32(estado)));
 
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ACTUALIZARDATOSUSUARIO", ConfigurationManager.AppSettings["Sistema"]);
-
+        ds = metodosUsuarios.actualizarUsuario(usuarios);
+        
         if (ds != null)
         {
             foreach (DataRow item in ds.Tables[0].Rows)

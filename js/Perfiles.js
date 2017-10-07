@@ -1,4 +1,5 @@
 ﻿var informe;
+var cantidad = "";
 
 $(document).ready(function () {
     informe = $('#tblPerfiles').dataTable({
@@ -18,10 +19,23 @@ $(document).ready(function () {
             $('#tblPerfiles_wrapper').css('margin-bottom', '40px');
         }
     });
+
     ocultarTodo();
     Perfiles_show();
+    cargarVentanas();
     cargarPerfiles();
 });
+
+function nuevoPerfil()
+{
+    var identificadores;
+    var numero = 0;
+    while(numero < cantidad.length)
+    {
+        console.log(cantidad[numero]);
+        numero++;
+    }
+}
 
 function cargarPerfiles() {
     $.ajax({
@@ -41,6 +55,40 @@ function cargarPerfiles() {
                    objeto[i].descripcion,
                    "<a class='btn btn-app' onclick='editarPerfil(" + objeto[i].id + ");' style='height:30px !important; min-width:1px !important;'><i class='fa fa-edit'></i></a>",
                 ]);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+function cargarVentanas() {
+    $.ajax({
+        type: "POST",
+        url: "Perfiles.aspx/cargarVentanas",
+        contentType: "application/json; charset=utf-8",
+        datatype: "jason",
+        success: function (arg) {
+            informe.fnClearTable();
+            if (arg.d == "{}" | arg.d == "") {
+                return;
+            }
+
+            var objeto = arg.d;
+            for (var i = 0; i < objeto.length; i++) {
+                var perfil = document.getElementById("slPaginas");
+                var option = document.createElement("option");
+                option.text = objeto[i].pagina;
+                option.value = objeto[i].id;
+                perfil.add(option, perfil[i]);
+            }
+            for (var i = 0; i < objeto.length; i++) {
+                var perfilEditar = document.getElementById("slPaginasEditar");
+                var option = document.createElement("option");
+                option.text = objeto[i].pagina;
+                option.value = objeto[i].id;
+                perfilEditar.add(option, perfilEditar[i]);
             }
         },
         error: function () {

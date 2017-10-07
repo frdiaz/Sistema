@@ -6,9 +6,9 @@ using System.Collections.Generic;
 public class Tab_rol
 {
 	private int id_rol;
-	private string nombre;
-	private int activo;
-	private string descripcion;
+	private string nombre = "";
+	private int activo = 1;
+	private string descripcion = "";
 
 	public int Id_rol
 	{

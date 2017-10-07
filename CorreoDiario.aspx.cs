@@ -27,12 +27,13 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
     public static bool nuevoMensaje(string mensaje)
     {
         bool resultado = false;
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_ACCION", DbType.String, 1));
-        Parametros.Add(new Parametro("@MENSAJE", DbType.String, mensaje));
-
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_EditarMensajesDiarios", ConfigurationManager.AppSettings["Sistema"]);
+        MetodosTabMensajes metodosMensajes = new MetodosTabMensajes();
+        Tab_mensajes mensajes = new Tab_mensajes();
+
+        mensajes.Mensaje = mensaje;
+
+        ds = metodosMensajes.nuevoMensaje(mensajes);
 
         if(ds != null)
         {
@@ -52,10 +53,11 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
     {
         int resultado = 0;
 
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 2));
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ConsultaMensajes", ConfigurationManager.AppSettings["Sistema"]);
+
+        MetodosTabMensajes metodosMensajes = new MetodosTabMensajes();
+
+        ds = metodosMensajes.mensajesDisponibles();
 
         if (ds != null)
         {
@@ -71,10 +73,11 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
     public static int mensajesEnviados()
     {
         int resultado = 0;
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 3));
+
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ConsultaMensajes", ConfigurationManager.AppSettings["Sistema"]);
+        MetodosTabMensajes metodosMensajes = new MetodosTabMensajes();
+
+        ds = metodosMensajes.mensajesEnviados();
 
         if (ds != null)
         {
@@ -92,11 +95,10 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
         bool resultado = true;
         try
         {
-            List<Parametro> Parametros = new List<Parametro>();
-            Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 1));
-
             DataSet ds = new DataSet();
-            ds = SqlQuery.ObtieneDataSet(Parametros, "SP_EnviarMensajeDiario", ConfigurationManager.AppSettings["Sistema"]);
+            MetodosTabMensajes metodosMensajes = new MetodosTabMensajes();
+
+            ds = metodosMensajes.obtenerMensajeAleatorio();
 
             if (ds != null)
             {
@@ -141,17 +143,16 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
 
     private static void procesaMensajes(ArrayList mensajes,  DataTable dt)
     {
-        List<Parametro> Parametros = new List<Parametro>();
-        Parametros.Add(new Parametro("@TIPO_CONSULTA", DbType.Int32, 1));//1=con fechas en el sp
         DataSet ds = new DataSet();
-        ds = SqlQuery.ObtieneDataSet(Parametros, "SP_ConsultaMensajes", ConfigurationManager.AppSettings["Sistema"]);
+        MetodosTabMensajes metodosMensajes = new MetodosTabMensajes();
+
+        ds = metodosMensajes.obtener20UltimosMensajesEnviados();
 
         if(ds != null)
         {
             foreach(DataRow item in ds.Tables[0].Rows)
             {
                 DateTime fechaExtraida = Convert.ToDateTime(item["fecha"]);
-                //string fecha = item["fecha"].ToString();
                 string fecha = fechaExtraida.ToString("yyyy/MM/dd");
                 string hora = item["hora"].ToString();
                 string mensaje = item["mensaje"].ToString();
