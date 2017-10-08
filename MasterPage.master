@@ -120,6 +120,16 @@
                                 <script src="js/MasterPageMenuAdministracion.js"></script>--%>
                             </ul>
                         </li>
+                        <li class="treeview" runat="server" id="Nutrición">
+                            <a href="#">
+                                <i class="fa fa-gear"></i><span>Nutrición</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu" runat="server" id="menuNutricion">
+                            </ul>
+                        </li>
                     </ul>
                 </section>
             </aside>

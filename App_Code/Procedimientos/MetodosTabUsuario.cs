@@ -72,7 +72,7 @@ public class MetodosTabUsuario
     {
         DataSet ds = new DataSet();
 
-        ds = SqlQuery.ObtieneDataSet("obtenerUsuarios", ConfigurationManager.AppSettings["Sistema"]);
+        ds = SqlQuery.ObtieneDataSet("SP_ObtenerUsuarios", ConfigurationManager.AppSettings["Sistema"]);
 
         return ds;
     }

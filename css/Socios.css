@@ -1,0 +1,13 @@
+﻿#dvSocios{
+    position:relative !important;
+}
+
+#dvNuevoSocio{
+    margin-top:-250px;
+    background-position:center;
+}
+
+#dvEditarSocio{
+    margin-top:-500px;
+    background-position:center;
+}

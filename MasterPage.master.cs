@@ -71,6 +71,7 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
 
         int administracion = 0;
         int mailbox = 0;
+        int nutricion = 0;
 
         if (ds != null)
         {
@@ -102,6 +103,19 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
 
                     li.Controls.Add(anchor);
                 }
+                else if (item["Menu"].ToString() == "Nutricion")
+                {
+                    nutricion++;
+                    HtmlGenericControl li = new HtmlGenericControl("li");
+                    li.Attributes["class"] = "active";
+                    menuNutricion.Controls.Add(li);
+
+                    HtmlGenericControl anchor = new HtmlGenericControl("a");
+                    anchor.Attributes.Add("href", item["url"].ToString());
+                    anchor.InnerText = item["submenu"].ToString();
+
+                    li.Controls.Add(anchor);
+                }
             }
         }
 
@@ -113,6 +127,11 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
         if(mailbox == 0)
         {
             Mailbox.Attributes["hidden"] = "hidden";
+        }
+
+        if(nutricion == 0)
+        {
+            Nutrición.Attributes["hidden"] = "hidden";
         }
     }
 
