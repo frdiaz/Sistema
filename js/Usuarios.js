@@ -85,7 +85,7 @@ function editarUsuario(id) {
 
         }
     });
-
+    
     EditarUsuarios_show();
 }
 
@@ -287,7 +287,8 @@ function resetearPassword() {
         data: data,
         success: function (result) {
             var respuesta = result.d;
-            if (respuesta = true) {
+
+            if (respuesta == true) {
                 mostrarAlerta(2, 'Contraseña Reseteada.');
             }
             else {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -36,4 +37,110 @@ public class MetodosTabSocios
 
         return ds;
     }
+
+    public bool crearSocio(Tab_socios socios)
+    {
+        bool resultado = false;
+        SqlConnection cnn = null;
+        SqlCommand cmd = null;
+
+        cnn = new SqlConnection(ConfigurationManager.AppSettings["Sistema"]);
+        cmd = new SqlCommand("SP_InsertarNuevoSocio", cnn);
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@Rut", SqlDbType.VarChar);
+        cmd.Parameters["@Rut"].Value = socios.Rut;
+        cmd.Parameters.Add("@Nombre", SqlDbType.VarChar);
+        cmd.Parameters["@Nombre"].Value = socios.Nombre;
+        cmd.Parameters.Add("@ApellidoPaterno", SqlDbType.VarChar);
+        cmd.Parameters["@ApellidoPaterno"].Value = socios.ApellidoPaterno;
+        cmd.Parameters.Add("@ApellidoMaterno", SqlDbType.VarChar);
+        cmd.Parameters["@ApellidoMaterno"].Value = socios.ApellidoMaterno;
+        cmd.Parameters.Add("@FechaNacimiento", SqlDbType.DateTime);
+        cmd.Parameters["@FechaNacimiento"].Value = socios.FechaNacimiento;
+        cmd.Parameters.Add("@Sexo", SqlDbType.Bit);
+        cmd.Parameters["@Sexo"].Value = socios.Sexo;
+        cmd.Parameters.Add("@Fono", SqlDbType.Int);
+        cmd.Parameters["@Fono"].Value = socios.Fono;
+        cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+        cmd.Parameters["@Email"].Value = socios.Email;
+
+        cnn.Open();
+        int cantidad = Convert.ToInt32(cmd.ExecuteNonQuery());
+        cnn.Close();
+
+        if (cantidad >= 1)
+        {
+            resultado = true;
+        }
+
+        return resultado;
+    }
+
+    public bool actualizarSocio(Tab_socios socios)
+    {
+        bool resultado = false;
+        SqlConnection cnn = null;
+        SqlCommand cmd = null;
+
+        cnn = new SqlConnection(ConfigurationManager.AppSettings["Sistema"]);
+        cmd = new SqlCommand("SP_ActualizarSocio", cnn);
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@ID", SqlDbType.Int);
+        cmd.Parameters["@ID"].Value = socios.Id_socio;
+        cmd.Parameters.Add("@Rut", SqlDbType.VarChar);
+        cmd.Parameters["@Rut"].Value = socios.Rut;
+        cmd.Parameters.Add("@Nombre", SqlDbType.VarChar);
+        cmd.Parameters["@Nombre"].Value = socios.Nombre;
+        cmd.Parameters.Add("@ApellidoPaterno", SqlDbType.VarChar);
+        cmd.Parameters["@ApellidoPaterno"].Value = socios.ApellidoPaterno;
+        cmd.Parameters.Add("@ApellidoMaterno", SqlDbType.VarChar);
+        cmd.Parameters["@ApellidoMaterno"].Value = socios.ApellidoMaterno;
+        cmd.Parameters.Add("@FechaNacimiento", SqlDbType.DateTime);
+        cmd.Parameters["@FechaNacimiento"].Value = socios.FechaNacimiento;
+        cmd.Parameters.Add("@Sexo", SqlDbType.Bit);
+        cmd.Parameters["@Sexo"].Value = socios.Sexo;
+        cmd.Parameters.Add("@Fono", SqlDbType.Int);
+        cmd.Parameters["@Fono"].Value = socios.Fono;
+        cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+        cmd.Parameters["@Email"].Value = socios.Email;
+
+        cnn.Open();
+        int cantidad = Convert.ToInt32(cmd.ExecuteNonQuery());
+        cnn.Close();
+
+        if (cantidad >= 1)
+        {
+            resultado = true;
+        }
+
+        return resultado;
+    }
 }
+
+
+//public static bool insertar()
+//{
+//    bool resultado = false;
+//    SqlConnection cnn = null;
+//    SqlCommand cmd = null;
+
+//    cnn = new SqlConnection(ConfigurationManager.AppSettings["prueba"]);
+//    cmd = new SqlCommand("insertar", cnn);
+//    cmd.CommandType = CommandType.StoredProcedure;
+
+//    cmd.Parameters.Add("@nombre", SqlDbType.VarChar);
+//    cmd.Parameters["@nombre"].Value = "FrancisaDAdco";
+
+//    cnn.Open();
+//    int cantidad = Convert.ToInt32(cmd.ExecuteNonQuery());
+//    cnn.Close();
+
+//    if (cantidad >= 1)
+//    {
+//        resultado = true;
+//    }
+
+//    return resultado;
+//}
