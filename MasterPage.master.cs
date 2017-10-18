@@ -156,7 +156,7 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
             foreach (DataRow item in ds.Tables[0].Rows)
             {
                 lblNombre1.Text = item["Nombre"].ToString();
-                lblNombre3.Text = item["Nombre"].ToString();
+                //lblNombre3.Text = item["Nombre"].ToString();
                 lblNombre2.Text = item["Nombre"].ToString() + " - " + item["Rol"].ToString();
             }
         }

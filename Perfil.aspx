@@ -17,7 +17,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Mis Datos</h3>
                     </div>
-                    <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture" style="width: 170px;">
+                    <%--<img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture" style="width: 170px;">--%>
                     <div class="box-body">
                         <div class="form-group">
                             <label>Nombre</label>

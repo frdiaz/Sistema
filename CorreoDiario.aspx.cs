@@ -16,7 +16,7 @@ using System.Web;
 
 public partial class pages_CorreoDiario : System.Web.UI.Page
 {
-    private static object httpContext;
+    //private static object httpContext;
     
     protected void Page_Load(object sender, EventArgs e)
     {

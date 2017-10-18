@@ -21,15 +21,15 @@ public partial class Perfiles : Page
     [WebMethod]
     public static ArrayList cargarVentanas()
     {
-        DataTable dt = new DataTable();
+        //DataTable dt = new DataTable();
         ArrayList perfiles = new ArrayList();
-        dt.Columns.Add("id", typeof(int));
-        dt.Columns.Add("pagina", typeof(string));
+        //dt.Columns.Add("id", typeof(int));
+        //dt.Columns.Add("pagina", typeof(string));
 
-        procesaCargarVentanas(perfiles, dt);
+        procesaCargarVentanas(perfiles/*, dt*/);
         return perfiles;
     }
-    public static void procesaCargarVentanas(ArrayList perfiles, DataTable dt)
+    public static void procesaCargarVentanas(ArrayList perfiles/*, DataTable dt*/)
     {
         MetodosTabPagina metodosPaginas = new MetodosTabPagina();
         DataSet ds = new DataSet();
@@ -42,7 +42,7 @@ public partial class Perfiles : Page
                 int id = Convert.ToInt32(item["id"]);
                 string pagina = item["pagina"].ToString();
 
-                dt.Rows.Add(id, pagina);
+                //dt.Rows.Add(id, pagina);
                 perfiles.Add(new { id = id, pagina = pagina });
             }
         }
@@ -51,19 +51,19 @@ public partial class Perfiles : Page
     [WebMethod]
     public static ArrayList cargarTablaPerfiles()
     {
-        DataTable dt = new DataTable();
+        //DataTable dt = new DataTable();
         ArrayList perfiles = new ArrayList();
-        dt.Columns.Add("id", typeof(int));
-        dt.Columns.Add("nombre", typeof(string));
-        dt.Columns.Add("descripcion", typeof(string));
-        dt.Columns.Add("activo", typeof(int));
+        //dt.Columns.Add("id", typeof(int));
+        //dt.Columns.Add("nombre", typeof(string));
+        //dt.Columns.Add("descripcion", typeof(string));
+        //dt.Columns.Add("activo", typeof(int));
 
-        procesaPerfiles(perfiles, dt);
-        HttpContext.Current.Session["DatatablePerfiles"] = dt;
+        procesaPerfiles(perfiles/*, dt*/);
+        //HttpContext.Current.Session["DatatablePerfiles"] = dt;
         return perfiles;
     }
 
-    public static void procesaPerfiles(ArrayList perfiles, DataTable dt)
+    public static void procesaPerfiles(ArrayList perfiles/*, DataTable dt*/)
     {
         MetodosTabPagina metodosPaginas = new MetodosTabPagina();
         DataSet ds = new DataSet();
@@ -78,7 +78,7 @@ public partial class Perfiles : Page
                 string nombre = item["nombre"].ToString();
                 string descripcion = item["descripcion"].ToString();
 
-                dt.Rows.Add(id, nombre, descripcion);
+                //dt.Rows.Add(id, nombre, descripcion);
                 perfiles.Add(new { id = id, nombre = nombre, descripcion = descripcion});
             }
         }

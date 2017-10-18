@@ -20,17 +20,17 @@ public partial class Usuarios : System.Web.UI.Page
     [WebMethod]
     public static ArrayList cargarPerfiles()
     {
-        DataTable dt = new DataTable();
+        //DataTable dt = new DataTable();
         ArrayList perfiles = new ArrayList();
-        dt.Columns.Add("id", typeof(int));
-        dt.Columns.Add("nombre", typeof(string));
+        //dt.Columns.Add("id", typeof(int));
+        //dt.Columns.Add("nombre", typeof(string));
         
-        procesaPerfiles(perfiles, dt);
-        HttpContext.Current.Session["DatatablePerfiles"] = dt;
+        procesaPerfiles(perfiles/*, dt*/);
+        //HttpContext.Current.Session["DatatablePerfiles"] = dt;
         return perfiles;
     }
 
-    public static void procesaPerfiles(ArrayList perfiles, DataTable dt)
+    public static void procesaPerfiles(ArrayList perfiles/*, DataTable dt*/)
     {
         MetodosTabRol metodosRol = new MetodosTabRol();
         DataSet ds = new DataSet();
@@ -44,7 +44,7 @@ public partial class Usuarios : System.Web.UI.Page
                 int id = Convert.ToInt32(item["id"]);
                 string nombre = item["nombre"].ToString();
 
-                dt.Rows.Add(id, nombre);
+                //dt.Rows.Add(id, nombre);
                 perfiles.Add(new { id = id, nombre = nombre});
             }
         }
@@ -53,18 +53,18 @@ public partial class Usuarios : System.Web.UI.Page
     [WebMethod]
     public static ArrayList cargarTablaUsuarios()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("id", typeof(Int32));
-        dt.Columns.Add("Rut", typeof(string));
-        dt.Columns.Add("Nombre", typeof(string));
-        dt.Columns.Add("Email", typeof(string));
-        dt.Columns.Add("Activo", typeof(string));
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("id", typeof(Int32));
+        //dt.Columns.Add("Rut", typeof(string));
+        //dt.Columns.Add("Nombre", typeof(string));
+        //dt.Columns.Add("Email", typeof(string));
+        //dt.Columns.Add("Activo", typeof(string));
 
         ArrayList mensajes = new ArrayList();
 
-        obtenerUsuarios(mensajes, dt);
+        obtenerUsuarios(mensajes/*, dt*/);
 
-        HttpContext.Current.Session["Datatable"] = dt;
+        //HttpContext.Current.Session["Datatable"] = dt;
 
         return mensajes;
     }
@@ -72,28 +72,28 @@ public partial class Usuarios : System.Web.UI.Page
     [WebMethod]
     public static ArrayList cargarEditarUsuarios(int id)
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("id", typeof(Int32));
-        dt.Columns.Add("Rut", typeof(string));
-        dt.Columns.Add("Email", typeof(string));
-        dt.Columns.Add("Nombre", typeof(string));
-        dt.Columns.Add("apellidoPaterno", typeof(string));
-        dt.Columns.Add("apellidoMaterno", typeof(string));
-        dt.Columns.Add("direccion", typeof(string));
-        dt.Columns.Add("fono", typeof(string));
-        dt.Columns.Add("activo", typeof(string));
-        dt.Columns.Add("rol", typeof(string));
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("id", typeof(Int32));
+        //dt.Columns.Add("Rut", typeof(string));
+        //dt.Columns.Add("Email", typeof(string));
+        //dt.Columns.Add("Nombre", typeof(string));
+        //dt.Columns.Add("apellidoPaterno", typeof(string));
+        //dt.Columns.Add("apellidoMaterno", typeof(string));
+        //dt.Columns.Add("direccion", typeof(string));
+        //dt.Columns.Add("fono", typeof(string));
+        //dt.Columns.Add("activo", typeof(string));
+        //dt.Columns.Add("rol", typeof(string));
 
         ArrayList mensajes = new ArrayList();
 
-        procesaEditarUsuarios(mensajes, dt, id);
+        procesaEditarUsuarios(mensajes, /*dt, */id);
 
-        HttpContext.Current.Session["Datatable"] = dt;
+        //HttpContext.Current.Session["Datatable"] = dt;
 
         return mensajes;
     }
 
-    private static void procesaEditarUsuarios(ArrayList mensajes, DataTable dt, int id_usuario)
+    private static void procesaEditarUsuarios(ArrayList mensajes, /*DataTable dt,*/ int id_usuario)
     {
         DataSet ds = new DataSet();
         MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
@@ -118,13 +118,13 @@ public partial class Usuarios : System.Web.UI.Page
                 int activo = Convert.ToInt32(item["activo"]);
                 int rol = Convert.ToInt32(item["rol"]);
 
-                dt.Rows.Add(id, rut, email, nombre, apellidoPaterno, apellidoMaterno, direccion, fono, activo, rol);
+                //dt.Rows.Add(id, rut, email, nombre, apellidoPaterno, apellidoMaterno, direccion, fono, activo, rol);
                 mensajes.Add(new { id = id, rut = rut, email = email, nombre = nombre, apellidoPaterno = apellidoPaterno, apellidoMaterno = apellidoMaterno, direccion = direccion, fono = fono, activo = activo, rol = rol});
             }
         }
     }
 
-    private static void obtenerUsuarios(ArrayList mensajes, DataTable dt)
+    private static void obtenerUsuarios(ArrayList mensajes/*, DataTable dt*/)
     {
         DataSet ds = new DataSet();
         MetodosTabUsuario metodosUsuarios = new MetodosTabUsuario();
@@ -149,7 +149,7 @@ public partial class Usuarios : System.Web.UI.Page
                     activo = "Desactivada";
                 }
 
-                dt.Rows.Add(id, rut, nombre, email, activo);
+                //dt.Rows.Add(id, rut, nombre, email, activo);
                 mensajes.Add(new {id = id, rut = rut, nombre = nombre, email = email, activo = activo});
             }
         }

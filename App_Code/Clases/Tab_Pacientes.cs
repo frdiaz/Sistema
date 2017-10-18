@@ -3,9 +3,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 
-public class Tab_socios
+public class Tab_pacientes
 {
-    private int id_socio = 0;
+    private int id_paciente = 0;
     private string rut = "";
     private string nombre = "";
     private string apellidoPaterno = "";
@@ -15,10 +15,10 @@ public class Tab_socios
     private int fono = 0;
     private string email = "";
 
-    public int Id_socio
+    public int Id_paciente
     {
-        get { return id_socio; }
-        set { id_socio = value; }
+        get { return id_paciente; }
+        set { id_paciente = value; }
     }
     public string Rut
     {
@@ -61,6 +61,6 @@ public class Tab_socios
         set { email = value; }
     }
 
-    public Tab_socios() { }
+    public Tab_pacientes() { }
 
 }

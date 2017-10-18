@@ -1,13 +1,13 @@
-﻿#dvSocios{
+﻿#dvPacientes{
     position:relative !important;
 }
 
-#dvNuevoSocio{
+#dvNuevoPaciente{
     margin-top:-250px;
     background-position:center;
 }
 
-#dvEditarSocio{
+#dvEditarPaciente{
     margin-top:-500px;
     background-position:center;
 }

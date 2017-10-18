@@ -87,14 +87,6 @@
                             <label>Fono</label>
                             <input type="number" class="form-control" id="txtFono" <%--placeholder="Telefono"--%> <%--maxlength="10"--%>>
                         </div>
-                        <%--<div class="form-group">
-                            <label>Sexo</label>
-                            <select class="form-control" id="slSexo">
-                                <option value="2">Seleccione</option>
-                                <option value="0">Femenino</option>
-                                <option value="1">Masculino</option>
-                            </select>
-                        </div>--%>
                         <div class="form-group">
                             <label>Password</label>
                             <label style="color: red">(*)</label>
@@ -121,7 +113,6 @@
         </div>
     </section>
 
-    <%--SECCION DE EDITAR USUARIO INICIO--%>
     <section class="content">
         <div class="row" id="dvEditarUsuario">
             <div class="col-md-6">
@@ -202,22 +193,7 @@
         </div>
 
     </section>
-    <%--SECCION DE EDITAR USUARIO TERMINO--%>
-
-    <%--BLOQUEA EL MENU SUPERIOR DEL USUARIO--%>
-    <%--<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>--%>
-
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <%--<script src="bower_components/fastclick/lib/fastclick.js"></script>--%>
 </asp:Content>
-
-
-<%--<div class="col-md-6">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Simple Full Width Table</h3>
-                    </div>
-                </div>
-            </div>--%>
