@@ -79,27 +79,14 @@ public partial class Pacientes : System.Web.UI.Page
     [WebMethod]
     public static ArrayList cargarEditarPacientes(int id)
     {
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("id", typeof(Int32));
-        //dt.Columns.Add("Rut", typeof(string));
-        //dt.Columns.Add("Nombre", typeof(string));
-        //dt.Columns.Add("apellidoPaterno", typeof(string));
-        //dt.Columns.Add("apellidoMaterno", typeof(string));
-        //dt.Columns.Add("fechaNacimiento", typeof(string));
-        //dt.Columns.Add("sexo", typeof(string));
-        //dt.Columns.Add("fono", typeof(string));
-        //dt.Columns.Add("Email", typeof(string));
-
         ArrayList mensajes = new ArrayList();
 
-        procesaEditarPacientes(mensajes,/* dt, */id);
-
-        //HttpContext.Current.Session["Datatable"] = dt;
-
+        procesaEditarPacientes(mensajes, id);
+        
         return mensajes;
     }
 
-    private static void procesaEditarPacientes(ArrayList mensajes, /*DataTable dt,*/ int id_socio)
+    private static void procesaEditarPacientes(ArrayList mensajes, int id_socio)
     {
         DataSet ds = new DataSet();
         MetodosTabPacientes metodosPacientes = new MetodosTabPacientes();
@@ -122,12 +109,11 @@ public partial class Pacientes : System.Web.UI.Page
                 int sexo = item["sexo"].ToString() == "True" ? 1 : 0;
                 string fono = item["fono"].ToString() != "0" ? item["fono"].ToString() : "";
                 string email = item["email"].ToString();
+                string edad = Convert.ToString(DateTime.Today.AddTicks(-fecha.Ticks).Year - 1);
 
                 //CALCULA LA EDAD
                 //int edad = DateTime.Today.AddTicks(-fecha.Ticks).Year - 1; 
-
-                //dt.Rows.Add(id, rut, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, sexo, fono, email);
-                mensajes.Add(new { id = id, rut = rut, nombre = nombre, apellidoPaterno = apellidoPaterno, apellidoMaterno = apellidoMaterno, fechaNacimiento = fechaNacimiento, sexo = sexo, fono = fono, email = email });
+                mensajes.Add(new { id = id, rut = rut, nombre = nombre, apellidoPaterno = apellidoPaterno, apellidoMaterno = apellidoMaterno, fechaNacimiento = fechaNacimiento, sexo = sexo, fono = fono, email = email, edad = edad });
             }
         }
     }
@@ -159,14 +145,16 @@ public partial class Pacientes : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static bool insertarFichaNutricional(string id, string peso, string talla, string cintura, string imc, string alcohol,
+    public static int insertarFichaNutricional(string id, string id_ficha, string peso, string talla, string cintura, string imc, string alcohol,
         string tabaco, string tipoConsulta, string anamnesis, string diagnostico, string indicaciones)
     {
-        bool resultado = true;
+        bool resultado;
+        int ultimo = -1;
 
         MetodosTabFichaNutricional metodosFichaNutricional = new MetodosTabFichaNutricional();
         Tab_fichaNutricional fichaNutricional = new Tab_fichaNutricional();
 
+        fichaNutricional.Id = Convert.ToInt32(id_ficha);
         fichaNutricional.Id_paciente = Convert.ToInt32(id);
         fichaNutricional.Peso = Convert.ToSingle(peso.Replace(".", ","));
         fichaNutricional.Talla = Convert.ToSingle(talla.Replace(".", ","));
@@ -180,7 +168,45 @@ public partial class Pacientes : System.Web.UI.Page
         fichaNutricional.FechaRegistro = DateTime.Now;
         fichaNutricional.Indicaciones = indicaciones;
 
-        resultado = metodosFichaNutricional.insertarFicha(fichaNutricional);
+        if(fichaNutricional.Id > 0)
+        {
+            resultado = metodosFichaNutricional.updateFicha(fichaNutricional);
+            ultimo = fichaNutricional.Id;
+        }
+        else
+        {
+            resultado = metodosFichaNutricional.insertarFicha(fichaNutricional);
+            if(resultado)
+            {
+                ultimo = metodosFichaNutricional.obtenerIDFichaInsertada(fichaNutricional);
+            }
+        }
+
+        return ultimo;
+    }
+
+    [WebMethod]
+    public static bool actualizarFichaAnterior(string id_ficha, string peso, string talla, string cintura, string imc, string alcohol,
+        string tabaco, string tipoConsulta, string anamnesis, string diagnostico, string indicaciones)
+    {
+        bool resultado = true;
+        MetodosTabFichaNutricional metodosFichaNutricional = new MetodosTabFichaNutricional();
+        Tab_fichaNutricional fichaNutricional = new Tab_fichaNutricional();
+
+        fichaNutricional.Id = Convert.ToInt32(id_ficha);
+        fichaNutricional.Peso = Convert.ToSingle(peso.Replace(".", ","));
+        fichaNutricional.Talla = Convert.ToSingle(talla.Replace(".", ","));
+        fichaNutricional.Cintura = Convert.ToSingle(cintura.Replace(".", ","));
+        fichaNutricional.IMC = Convert.ToSingle(imc.Replace(".", ","));
+        fichaNutricional.Alcohol = Convert.ToInt32(alcohol);
+        fichaNutricional.Tabaco = Convert.ToInt32(tabaco);
+        fichaNutricional.IdTipoConsulta = Convert.ToInt32(tipoConsulta);
+        fichaNutricional.Anamnesis = anamnesis;
+        fichaNutricional.Diagnostico = diagnostico;
+        fichaNutricional.FechaRegistro = DateTime.Now;
+        fichaNutricional.Indicaciones = indicaciones;
+
+        resultado = metodosFichaNutricional.updateFicha(fichaNutricional);
 
         return resultado;
     }
@@ -188,22 +214,14 @@ public partial class Pacientes : System.Web.UI.Page
     [WebMethod]
     public static ArrayList cargarTablaFichaResumenPacientes(string id_paciente)
     {
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("id", typeof(string));
-        //dt.Columns.Add("Fecha", typeof(string));
-        //dt.Columns.Add("Peso", typeof(string));
-        //dt.Columns.Add("IMC", typeof(string));
-
         ArrayList mensajes = new ArrayList();
 
-        obtenerResumenFichaPacientes(mensajes,/* dt, */id_paciente);
-
-        //HttpContext.Current.Session["Datatable"] = dt;
+        obtenerResumenFichaPacientes(mensajes, id_paciente);
 
         return mensajes;
     }
 
-    private static void obtenerResumenFichaPacientes(ArrayList mensajes, /*DataTable dt,*/ string id_paciente)
+    private static void obtenerResumenFichaPacientes(ArrayList mensajes, string id_paciente)
     {
         DataSet ds = new DataSet();
         MetodosTabFichaNutricional fichaNutricional = new MetodosTabFichaNutricional();
@@ -224,7 +242,6 @@ public partial class Pacientes : System.Web.UI.Page
                 DateTime fechaExtraida = Convert.ToDateTime(item["fechaRegistro"]);
                 string fecha = fechaExtraida.ToString("yyyy/MM/dd");
 
-                //dt.Rows.Add(id, fecha, peso, imc);
                 mensajes.Add(new { ID = id, Fecha = fecha, Peso = peso, IMC = imc });
             }
         }
@@ -291,6 +308,34 @@ public partial class Pacientes : System.Web.UI.Page
                     diagnostico = diagnostico,
                     indicaciones = indicaciones
                 });
+            }
+        }
+    }
+
+    [WebMethod]
+    public static ArrayList cargarTipoConsulta()
+    {
+        ArrayList tipoConsulta = new ArrayList();
+
+        procesaTipoConsulta(tipoConsulta);
+        return tipoConsulta;
+    }
+
+    public static void procesaTipoConsulta(ArrayList tipoConsulta)
+    {
+        MetodosTabTipoConsulta metodosTipoConsulta = new MetodosTabTipoConsulta();
+        DataSet ds = new DataSet();
+
+        ds = metodosTipoConsulta.obtenerTipoConsulta();
+
+        if (ds != null)
+        {
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                int id = Convert.ToInt32(item["id"]);
+                string nombre = item["nombre"].ToString();
+
+                tipoConsulta.Add(new { id = id, nombre = nombre });
             }
         }
     }

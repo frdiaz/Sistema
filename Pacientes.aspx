@@ -179,11 +179,9 @@
                                 <h3 class="box-title">Resumen Historico</h3>
                             </div>
                             <div class="box-body">
-                                <label>Nombre: Francisco Diaz</label>
+                                <label id="lblResumenNombre"></label>
                                 <br />
-                                <label>Edad: 26 Años</label>
-                                <br />
-                                <label>Ultima Consulta: </label>
+                                <label id="lblResumenEdad"></label>
                                 <br />
                                 <table id="tblResumen1" class="table table-bordered table-hover">
                                     <thead>
@@ -235,10 +233,8 @@
                                     </div>
                                     <div class="col-xs-5">
                                         <label>Tipo Consulta</label>
-                                        <select class="form-control" disabled="disabled">
+                                        <select class="form-control" disabled="disabled" id="slTipoConsultaEditar">
                                             <option value="0">Seleccione</option>
-                                            <option value="1">Femenino</option>
-                                            <option value="2">Masculino</option>
                                         </select>
                                     </div>
                                 </div>
@@ -258,8 +254,9 @@
                                 </div>
 
                                 <div class="box-footer">
-                                    <%--<button type="button" class="btn btn-primary" onclick="">Guardar</button>--%>
                                     <button type="button" class="btn btn-primary" onclick="ocultarDetalleFicha();">Volver</button>
+                                    <button type="button" class="btn btn-primary" onclick="editarFicha();">Editar</button>
+                                    <button type="button" class="btn btn-primary" id="btnGuardarFichaAnterior" onclick="actualizarFichaAnterior();" disabled="disabled">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -300,10 +297,8 @@
                                     </div>
                                     <div class="col-xs-5">
                                         <label>Tipo Consulta</label>
-                                        <select class="form-control" id="slTipoConsulta">
-                                            <option value="0">Seleccione</option>
-                                            <option value="1">Femenino</option>
-                                            <option value="2">Masculino</option>
+                                        <select class="form-control" id="slTipoConsultaNuevo">
+                                            <option value="0">Seleccione</option>   
                                         </select>
                                     </div>
                                 </div>
@@ -324,6 +319,7 @@
 
                                 <div class="box-footer">
                                     <button type="button" class="btn btn-primary" onclick="insertarFichaNutricional();">Guardar</button>
+                                    <button type="button" class="btn btn-primary" onclick="guardarYCerrar();">Guardar y Cerrar</button>
                                 </div>
                             </div>
                         </div>
