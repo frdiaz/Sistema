@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
     <h3 style="margin-left: 20px; margin-top: 0px;">Nutrición<small> Pacientes</small></h3>
 
     <button type="button" class="btn btn-primary" onclick="nuevoPaciente_show();" style="margin-left: 20px;">Nuevo Paciente</button>
@@ -298,7 +302,7 @@
                                     <div class="col-xs-5">
                                         <label>Tipo Consulta</label>
                                         <select class="form-control" id="slTipoConsultaNuevo">
-                                            <option value="0">Seleccione</option>   
+                                            <option value="0">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -313,7 +317,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Indicaciones</label>
-                                        <textarea class="form-control" id="txtIndicaciones" rows="4" placeholder="Enter ..." ></textarea>
+                                        <textarea class="form-control" id="txtIndicaciones" rows="4" placeholder="Enter ..."></textarea>
                                     </div>
                                 </div>
 
@@ -328,7 +332,43 @@
             </div>
         </div>
     </section>
+    <section class="content">
+        <div class="historico">
+            <div id="dvVerHistorico">
+                <div class="row" id="dvHistorico">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Datos Historicos</h3>
+                            </div>
+                            <div id="container"></div>
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Tabla con todos los datos</h3>
+                            </div>
+                            <table id="tblCompleta" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nº</th>
+                                        <th>Fecha</th>
+                                        <th>Peso</th>
+                                        <th>Talla</th>
+                                        <th>Cintura</th>
+                                        <th>IMC</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 </asp:Content>
+
+
+

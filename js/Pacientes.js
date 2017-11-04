@@ -41,6 +41,24 @@ $(document).ready(function () {
             $('#tblResumen1_wrapper').css('margin-bottom', '40px');
         }
     });
+
+    completa = $('#tblCompleta').dataTable({
+        language: {
+            url: 'bower_components/datatables/locale/es_ES.txt'
+        },
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bSort": false,
+        "bInfo": false,
+        "colReorder": true,
+        "bAutoWidth": false,
+        "bDeferRender": true,
+        "bFilter": false,
+        "bSort": true,
+        "initComplete": function (settings, json) {
+            $('#tblCompleta_wrapper').css('margin-bottom', '40px');
+        }
+    });
     cargarTipoConsulta();
     Pacientes_show();
 
@@ -95,7 +113,7 @@ function cargarPacientes() {
                    objeto[i].nombre,
                    "<a class='btn btn-app' onclick='editarPaciente(" + objeto[i].id + ");' style='height:30px !important; min-width:1px !important;'><i class='fa fa-edit'></i></a>",
                    "<a class='btn btn-app' onclick='ingresarFicha(" + objeto[i].id + ");' style='height:30px !important; min-width:1px !important;'><i class='fa fa-edit'></i></a>",
-                   //"<a class='btn btn-app' onclick='historial(" + objeto[i].id + ");' style='height:30px !important; min-width:1px !important;'><i class='fa fa-edit'></i></a>",
+                   "<a class='btn btn-app' onclick='historial(" + objeto[i].id + ");' style='height:30px !important; min-width:1px !important;'><i class='fa fa-edit'></i></a>",
                    "",
                 ]);
             }
@@ -104,6 +122,66 @@ function cargarPacientes() {
 
         }
     });
+}
+
+function historial(id_usuario)
+{
+    ocultarTodo();
+    historico_show();
+
+    Highcharts.chart('container', {
+        title: {
+            text: 'Resumen de Peso'
+        },
+        //subtitle: {
+        //    text: 'Source: thesolarfoundation.com'
+        //},
+        yAxis: {
+            title: {
+                text: 'Peso'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                pointStart: 2010
+            }
+        },
+        series: [{
+            name: 'Peso',
+            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+            //}, //{
+            //name: 'Cintura',
+            //data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+        }],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+    });
+
+}
+
+function historico_show()
+{
+    document.getElementById('dvVerHistorico').style.display = "block";
 }
 
 function editarPaciente(id) {
@@ -340,7 +418,7 @@ function ocultarTodo() {
     document.getElementById('dvResumen').style.display = "none";
     document.getElementById('dvFichaNutricional').style.display = "none";
     document.getElementById('dvVerResumen').style.display = "none";
-
+    document.getElementById('dvVerHistorico').style.display = "none";
 }
 
 function nuevoPaciente_show() {
