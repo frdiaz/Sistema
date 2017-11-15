@@ -124,10 +124,88 @@ function cargarPacientes() {
     });
 }
 
-function historial(id_usuario)
-{
+function historial(id_paciente) {
     ocultarTodo();
     historico_show();
+
+    var data = '{id_paciente:"' + id_paciente + '"}';
+
+    $.ajax({
+        type: "POST",
+        url: "Pacientes.aspx/cargarDatosHistoricos",
+        contentType: "application/json; charset=utf-8",
+        datatype: "jason",
+        data, data,
+        success: function (arg) {
+            completa.fnClearTable();
+            if (arg.d == "{}" | arg.d == "") {
+                return;
+            }
+            var numero = 0;
+            var objeto = arg.d;
+            console.log(objeto);
+            for (var i = 0; i < objeto.length; i++) {
+                numero++;
+                completa.fnAddData([
+                    numero,
+                    objeto[i].fecha,
+                    objeto[i].peso,
+                    objeto[i].talla,
+                    objeto[i].cintura,
+                    objeto[i].imc
+                ]);
+            }
+            cargarGrafico(objeto);
+            
+        },
+        error: function () {
+
+        }
+    });
+}
+
+function cargarGrafico(objeto) {
+
+    var uno = "0";
+    var dos = "0";
+    var tres = "0";
+    var cuatro = "0";
+    var cinco = "0";
+    var Seis = "0";
+
+    var a = 0;
+
+    for (var i = 0; i < objeto.length; i++) {
+        var numero = objeto[i].peso;
+        numero = numero.replace(",", ".");
+
+        if (a == 0) {
+            Seis = numero;
+            console.log(numero);
+            a++;
+        } else if (a == 1) {
+            cinco = numero;
+            console.log(numero);
+            a++;
+        } else if (a == 2) {
+            cuatro = numero;
+            console.log(numero);
+            a++;
+        } else if (a == 3) {
+            tres = numero;
+            console.log(numero);
+            a++;
+        } else if (a == 4) {
+            dos = numero;
+            console.log(numero);
+            a++;
+        } else if (a == 5) {
+            uno = numero;
+            console.log(numero);
+            a++;
+        }
+        
+    }
 
     Highcharts.chart('container', {
         title: {
@@ -156,7 +234,9 @@ function historial(id_usuario)
         },
         series: [{
             name: 'Peso',
-            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+            //data: [[uno], [dos], [57.177], [69658], [97031], [119931], [137133], [154175]
+            data: [[parseFloat(uno)], [parseFloat(dos)], [parseFloat(tres)], [parseFloat(cuatro)], [parseFloat(cinco)], [parseFloat(Seis)]]
+            //data: datosss
             //}, //{
             //name: 'Cintura',
             //data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
@@ -176,11 +256,9 @@ function historial(id_usuario)
             }]
         }
     });
-
 }
 
-function historico_show()
-{
+function historico_show() {
     document.getElementById('dvVerHistorico').style.display = "block";
 }
 
@@ -251,7 +329,7 @@ function nuevoPaciente() {
                     mostrarAlerta(2, 'Paciente Creado');
                     ocultarTodo();
                     Pacientes_show();
-                    cargarPacientes();  
+                    cargarPacientes();
                 }
                 else {
                     mostrarAlerta(3, 'Paciente NO Creado');
@@ -408,7 +486,7 @@ function Pacientes_show() {
     ocultarTodo();
     cargarPacientes();
     document.getElementById('dvPacientes').style.display = "block";
-    
+
 }
 
 function ocultarTodo() {
@@ -473,7 +551,7 @@ function ingresarFicha(id_Paciente) {
     id_PacienteFichaNutricional = id_Paciente;
     cargarTablaResumen(id_Paciente);
     datosPrincipales(id_Paciente);
-    
+
     setTimeout('actualizarIMC()', 1000);
 }
 
@@ -583,8 +661,7 @@ function cargarTipoConsulta() {
     });
 }
 
-function editarFicha()
-{
+function editarFicha() {
     actualizarResumenIMC();
     document.getElementById('txtResumenPeso').disabled = false;
     document.getElementById('txtResumenTalla').disabled = false;
@@ -600,8 +677,7 @@ function editarFicha()
     document.getElementById('btnGuardarFichaAnterior').disabled = false;
 }
 
-function bloquearCampos()
-{
+function bloquearCampos() {
     document.getElementById('txtResumenPeso').disabled = true;
     document.getElementById('txtResumenTalla').disabled = true;
     document.getElementById('txtResumenCintura').disabled = true;
@@ -627,15 +703,13 @@ function borrarDatos() {
     document.getElementById('txtIndicaciones').value = "";
 }
 
-function guardarYCerrar()
-{
+function guardarYCerrar() {
     insertarFichaNutricional();
     Pacientes_show();
     id_actulizarFicha = 0;
 }
 
-function actualizarFichaAnterior()
-{
+function actualizarFichaAnterior() {
     var peso = document.getElementById('txtResumenPeso').value;
     var talla = document.getElementById('txtResumenTalla').value;
     var cintura = document.getElementById('txtResumenCintura').value;

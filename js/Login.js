@@ -3,7 +3,6 @@
     var Password = document.getElementById('txtPassword').value;
 
     if (Email != '' && Password != '') {
-        //var data = '{email:"' + Email + '","password:"' + Password + '"}';
         var data = '{ "email":"'+Email+'", "password":"'+Password+'" }';
 
         $.ajax({
@@ -31,7 +30,4 @@
     else {
         alert("Faltan campos por completar");
     }
-
-
-
 }

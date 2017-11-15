@@ -339,4 +339,41 @@ public partial class Pacientes : System.Web.UI.Page
             }
         }
     }
+
+    [WebMethod]
+    public static ArrayList cargarDatosHistoricos(string id_paciente)
+    {
+        ArrayList Datos = new ArrayList();
+        DataSet ds = new DataSet();
+
+        MetodosTabFichaNutricional metodosFichaNutricional = new MetodosTabFichaNutricional();
+        Tab_pacientes pacientes = new Tab_pacientes();
+
+        pacientes.Id_paciente = Convert.ToInt32(id_paciente);
+
+        ds = metodosFichaNutricional.obtenerFichasPorIDPaciente(pacientes);
+
+        if (ds != null)
+        {
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                string fecha = item["fechaRegistro"].ToString();
+                decimal peso = Convert.ToDecimal(item["peso"]);
+                string peso2 = peso.ToString("N2");
+
+                decimal talla = Convert.ToDecimal(item["talla"]);
+                string talla2 = talla.ToString("N2");
+
+                decimal cintura = Convert.ToDecimal(item["cintura"]);
+                string cintura2 = cintura.ToString("N2");
+
+                decimal imc = Convert.ToDecimal(item["imc"]);
+                string imc2 = imc.ToString("N2");
+
+                Datos.Add(new { fecha = fecha, peso = peso2, talla = talla2, cintura = cintura2, imc = imc2 });
+            }
+        }
+
+        return Datos;
+    }
 }
