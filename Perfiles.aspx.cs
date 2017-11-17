@@ -18,18 +18,27 @@ public partial class Perfiles : Page
 
     }
 
+    #region metodos
+    
     [WebMethod]
     public static ArrayList cargarVentanas()
-    {
-        //DataTable dt = new DataTable();
+    { 
         ArrayList perfiles = new ArrayList();
-        //dt.Columns.Add("id", typeof(int));
-        //dt.Columns.Add("pagina", typeof(string));
 
-        procesaCargarVentanas(perfiles/*, dt*/);
+        procesaCargarVentanas(perfiles);
         return perfiles;
     }
-    public static void procesaCargarVentanas(ArrayList perfiles/*, DataTable dt*/)
+
+    [WebMethod]
+    public static ArrayList cargarTablaPerfiles()
+    {
+        ArrayList perfiles = new ArrayList();
+
+        procesaPerfiles(perfiles);
+        return perfiles;
+    }
+
+    public static void procesaCargarVentanas(ArrayList perfiles)
     {
         MetodosTabPagina metodosPaginas = new MetodosTabPagina();
         DataSet ds = new DataSet();
@@ -41,29 +50,13 @@ public partial class Perfiles : Page
             {
                 int id = Convert.ToInt32(item["id"]);
                 string pagina = item["pagina"].ToString();
-
-                //dt.Rows.Add(id, pagina);
+                
                 perfiles.Add(new { id = id, pagina = pagina });
             }
         }
     }
 
-    [WebMethod]
-    public static ArrayList cargarTablaPerfiles()
-    {
-        //DataTable dt = new DataTable();
-        ArrayList perfiles = new ArrayList();
-        //dt.Columns.Add("id", typeof(int));
-        //dt.Columns.Add("nombre", typeof(string));
-        //dt.Columns.Add("descripcion", typeof(string));
-        //dt.Columns.Add("activo", typeof(int));
-
-        procesaPerfiles(perfiles/*, dt*/);
-        //HttpContext.Current.Session["DatatablePerfiles"] = dt;
-        return perfiles;
-    }
-
-    public static void procesaPerfiles(ArrayList perfiles/*, DataTable dt*/)
+    public static void procesaPerfiles(ArrayList perfiles)
     {
         MetodosTabPagina metodosPaginas = new MetodosTabPagina();
         DataSet ds = new DataSet();
@@ -78,9 +71,10 @@ public partial class Perfiles : Page
                 string nombre = item["nombre"].ToString();
                 string descripcion = item["descripcion"].ToString();
 
-                //dt.Rows.Add(id, nombre, descripcion);
                 perfiles.Add(new { id = id, nombre = nombre, descripcion = descripcion});
             }
         }
     }
+
+    #endregion
 }

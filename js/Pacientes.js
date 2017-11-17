@@ -143,20 +143,20 @@ function historial(id_paciente) {
             }
             var numero = 0;
             var objeto = arg.d;
-            console.log(objeto);
-            for (var i = 0; i < objeto.length; i++) {
+            
+            for (var i = objeto.length; i > 0; i--) {
                 numero++;
                 completa.fnAddData([
                     numero,
-                    objeto[i].fecha,
-                    objeto[i].peso,
-                    objeto[i].talla,
-                    objeto[i].cintura,
-                    objeto[i].imc
+                    objeto[i-1].fecha,
+                    objeto[i-1].peso,
+                    objeto[i-1].talla,
+                    objeto[i-1].cintura,
+                    objeto[i-1].imc
                 ]);
             }
             cargarGrafico(objeto);
-            
+
         },
         error: function () {
 
@@ -165,46 +165,52 @@ function historial(id_paciente) {
 }
 
 function cargarGrafico(objeto) {
+    var valorObjeto = new Object();
 
-    var uno = "0";
-    var dos = "0";
-    var tres = "0";
-    var cuatro = "0";
-    var cinco = "0";
-    var Seis = "0";
+    valorObjeto.uno = "0";
+    valorObjeto.dos = "0";
+    valorObjeto.tres = "0";
+    valorObjeto.cuatro = "0";
+    valorObjeto.cinco = "0";
+    valorObjeto.seis = "0";
 
+    var fechaObjeto = new Object();
+
+    fechaObjeto.fecha1 = "";
+    fechaObjeto.fecha2 = "";
+    fechaObjeto.fecha3 = "";
+    fechaObjeto.fecha4 = "";
+    fechaObjeto.fecha5 = "";
+    fechaObjeto.fecha6 = "";
+    
+    var i = 0;
+    var cantidad = 0;
     var a = 0;
 
-    for (var i = 0; i < objeto.length; i++) {
-        var numero = objeto[i].peso;
+    for (i = objeto.length; i > 0; i--) {
+        var numero = objeto[i - 1].peso;
+        var fecha = objeto[i - 1].fecha;
         numero = numero.replace(",", ".");
-
-        if (a == 0) {
-            Seis = numero;
-            console.log(numero);
-            a++;
-        } else if (a == 1) {
-            cinco = numero;
-            console.log(numero);
-            a++;
-        } else if (a == 2) {
-            cuatro = numero;
-            console.log(numero);
-            a++;
-        } else if (a == 3) {
-            tres = numero;
-            console.log(numero);
-            a++;
-        } else if (a == 4) {
-            dos = numero;
-            console.log(numero);
-            a++;
-        } else if (a == 5) {
-            uno = numero;
-            console.log(numero);
-            a++;
+        if (cantidad == 0) {
+            valorObjeto.seis = numero;
+            fechaObjeto.fecha6 = fecha;
+        } else if (cantidad == 1) {
+            valorObjeto.cinco = numero;
+            fechaObjeto.fecha5 = fecha;
+        } else if (cantidad == 2) {
+            valorObjeto.cuatro = numero;
+            fechaObjeto.fecha4 = fecha;
+        } else if (cantidad == 3) {
+            valorObjeto.tres = numero;
+            fechaObjeto.fecha3 = fecha;
+        } else if (cantidad == 4) {
+            valorObjeto.dos = numero;
+            fechaObjeto.fecha2 = fecha;
+        } else if (cantidad == 5) {
+            valorObjeto.uno = numero;
+            fechaObjeto.fecha1 = fecha;
         }
-        
+        cantidad++;
     }
 
     Highcharts.chart('container', {
@@ -224,22 +230,20 @@ function cargarGrafico(objeto) {
             align: 'right',
             verticalAlign: 'middle'
         },
-        plotOptions: {
-            series: {
-                label: {
-                    connectorAllowed: false
-                },
-                pointStart: 2010
-            }
+        //plotOptions: {
+        //    series: {
+        //        label: {
+        //            connectorAllowed: false
+        //        },
+        //        pointStart: 2010
+        //    }
+        //},
+        xAxis: {
+            categories: [fechaObjeto.fecha1, fechaObjeto.fecha2, fechaObjeto.fecha3, fechaObjeto.fecha4, fechaObjeto.fecha5, fechaObjeto.fecha6]
         },
         series: [{
             name: 'Peso',
-            //data: [[uno], [dos], [57.177], [69658], [97031], [119931], [137133], [154175]
-            data: [[parseFloat(uno)], [parseFloat(dos)], [parseFloat(tres)], [parseFloat(cuatro)], [parseFloat(cinco)], [parseFloat(Seis)]]
-            //data: datosss
-            //}, //{
-            //name: 'Cintura',
-            //data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+            data: [[parseFloat(valorObjeto.uno)], [parseFloat(valorObjeto.dos)], [parseFloat(valorObjeto.tres)], [parseFloat(valorObjeto.cuatro)], [parseFloat(valorObjeto.cinco)], [parseFloat(valorObjeto.seis)]]
         }],
         responsive: {
             rules: [{
@@ -542,7 +546,6 @@ function actualizarResumenIMC() {
 }
 
 function ingresarFicha(id_Paciente) {
-    console.log(id_Paciente);
     ocultarTodo();
     document.getElementById('dvResumen').style.display = "block";
     document.getElementById('dvFichaNutricional').style.display = "block";

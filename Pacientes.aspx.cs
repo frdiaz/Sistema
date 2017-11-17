@@ -16,6 +16,8 @@ public partial class Pacientes : System.Web.UI.Page
 
     }
 
+    #region metodos
+    
     [WebMethod]
     public static ArrayList cargarTablaPacientes()
     {
@@ -358,6 +360,9 @@ public partial class Pacientes : System.Web.UI.Page
             foreach (DataRow item in ds.Tables[0].Rows)
             {
                 string fecha = item["fechaRegistro"].ToString();
+
+                fecha = Convert.ToDateTime(fecha).ToShortDateString();
+
                 decimal peso = Convert.ToDecimal(item["peso"]);
                 string peso2 = peso.ToString("N2");
 
@@ -376,4 +381,6 @@ public partial class Pacientes : System.Web.UI.Page
 
         return Datos;
     }
+
+    #endregion
 }

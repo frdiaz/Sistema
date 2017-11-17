@@ -23,6 +23,8 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
 
     }
 
+    #region metodos
+
     [WebMethod]
     public static bool nuevoMensaje(string mensaje)
     {
@@ -163,4 +165,5 @@ public partial class pages_CorreoDiario : System.Web.UI.Page
         }
     }
 
+    #endregion
 }

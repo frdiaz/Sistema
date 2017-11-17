@@ -59,6 +59,7 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
         }
     }
 
+    #region metodos
     private void cargarMenus()
     {
         Tab_usuario usuarios = new Tab_usuario();
@@ -135,12 +136,6 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
         }
     }
 
-    private void BtnSalir_Click(object sender, EventArgs e)
-    {
-        Session["idUsuario"] = "";
-        Response.Redirect("~/Login.aspx?error=4");
-    }
-
     private void cargarDatosPrincipales()
     {
         DataSet ds = new DataSet();
@@ -156,9 +151,19 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
             foreach (DataRow item in ds.Tables[0].Rows)
             {
                 lblNombre1.Text = item["Nombre"].ToString();
-                //lblNombre3.Text = item["Nombre"].ToString();
                 lblNombre2.Text = item["Nombre"].ToString() + " - " + item["Rol"].ToString();
             }
         }
     }
+
+    #endregion
+
+    #region eventos
+    private void BtnSalir_Click(object sender, EventArgs e)
+    {
+        Session["idUsuario"] = "";
+        Response.Redirect("~/Login.aspx?error=4");
+    }
+
+    #endregion
 }

@@ -33,6 +33,7 @@ public partial class Login : System.Web.UI.Page
         btnLogin.Click += BtnLogin_Click;
     }
 
+    #region eventos
     private void BtnLogin_Click(object sender, EventArgs e)
     {
         DataSet ds = new DataSet();
@@ -64,6 +65,9 @@ public partial class Login : System.Web.UI.Page
         }
     }
 
+    #endregion
+
+    #region metodos
     public void mensajeError(int numeroError)
     {
         Tab_alertas alertas = new Tab_alertas();
@@ -81,4 +85,6 @@ public partial class Login : System.Web.UI.Page
             }
         }
     }
+
+    #endregion
 }
