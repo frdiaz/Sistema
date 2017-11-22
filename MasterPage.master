@@ -21,7 +21,6 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <form id="Form1" runat="server">
         <asp:HiddenField runat="server" ID="hf_idUsuario"></asp:HiddenField>
-
         <div class="wrapper">
             <header class="main-header">
                 <a href="Dashboard.aspx" class="logo">
@@ -57,7 +56,7 @@
                                     <asp:Label runat="server" ID="lblNombre1"></asp:Label>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li class="user-header" style="height:80px !important">
+                                    <li class="user-header" style="height: 80px !important">
                                         <p>
                                             <asp:Label runat="server" ID="lblNombre2"></asp:Label>
                                             <small>Agosto 2017</small>
@@ -68,7 +67,7 @@
                                             <a href="Perfil.aspx" class="btn btn-default btn-flat">Perfil</a>
                                         </div>
                                         <div class="pull-right">
-                                            <asp:Button runat="server" ID="btnSalir" CssClass="btn btn-default btn-flat" text="Salir"/>
+                                            <asp:Button runat="server" ID="btnSalir" CssClass="btn btn-default btn-flat" Text="Salir" />
                                         </div>
                                     </li>
                                 </ul>
@@ -80,7 +79,6 @@
             <aside class="main-sidebar">
                 <section class="sidebar">
                     <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header">MENU DE NAVEGACIÓN</li>
                         <li><a href="Dashboard.aspx"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
                         <li class="treeview" runat="server" id="Mailbox">
                             <a href="#">
@@ -92,6 +90,26 @@
                             <ul class="treeview-menu" runat="server" id="menuMailbox">
                             </ul>
                         </li>
+                        <li class="treeview" runat="server" id="Nutrición">
+                            <a href="#">
+                                <i class="fa fa-balance-scale"></i><span>Nutrición</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu" runat="server" id="menuNutricion">
+                            </ul>
+                        </li>
+                        <li class="treeview" runat="server" id="Ventas">
+                            <a href="#">
+                                <i class="fa fa-cutlery"></i><span>Ventas</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu" runat="server" id="menuVentas">
+                            </ul>
+                        </li>
                         <li class="treeview" runat="server" id="Administracion">
                             <a href="#">
                                 <i class="fa fa-gear"></i><span>Administración</span>
@@ -100,16 +118,6 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu" runat="server" id="menuAdministracion">
-                            </ul>
-                        </li>
-                        <li class="treeview" runat="server" id="Nutrición">
-                            <a href="#">
-                                <i class="fa fa-gear"></i><span>Nutrición</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu" runat="server" id="menuNutricion">
                             </ul>
                         </li>
                     </ul>

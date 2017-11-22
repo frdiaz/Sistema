@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -38,4 +39,35 @@ public class MetodosTabPagina
         return ds;
     }
 
+    public bool crearPagina(Tab_pagina pagina)
+    {
+        bool resultado = false;
+
+        SqlConnection cnn = null;
+        SqlCommand cmd = null;
+
+        cnn = new SqlConnection(ConfigurationManager.AppSettings["Sistema"]);
+        cmd = new SqlCommand("SP_InsertarNuevaPagina", cnn);
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@Menu", SqlDbType.VarChar);
+        cmd.Parameters["@Menu"].Value = pagina.Menu;
+        cmd.Parameters.Add("@URL", SqlDbType.VarChar);
+        cmd.Parameters["@URL"].Value = pagina.Url;
+        cmd.Parameters.Add("@Class", SqlDbType.VarChar);
+        cmd.Parameters["@Class"].Value = pagina.Clases;
+        cmd.Parameters.Add("@Submenu", SqlDbType.VarChar);
+        cmd.Parameters["@Submenu"].Value = pagina.Submenu;
+
+        cnn.Open();
+        int cantidad = Convert.ToInt32(cmd.ExecuteNonQuery());
+        cnn.Close();
+
+        if (cantidad >= 1)
+        {
+            resultado = true;
+        }
+
+        return resultado;
+    }
 }

@@ -313,7 +313,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Diagnostico</label>
-                                        <textarea class="form-control" id="txtDiagnostico" rows="4" placeholder="Enter ..." <%--disabled="disabled"--%>></textarea>
+                                        <textarea class="form-control" id="txtDiagnostico" rows="4" placeholder="Enter ..." disabled="disabled"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Indicaciones</label>
@@ -341,7 +341,9 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Datos Historicos</h3>
                             </div>
-                            <div id="container"></div>
+                            <div id="container2" style="width:50% !important; margin-right:0px;"></div>
+                            <div id="container" style="width:50% !important; margin-left:0px;"></div>
+                            
                             <div class="box-header with-border">
                                 <h3 class="box-title">Tabla con todos los datos</h3>
                             </div>

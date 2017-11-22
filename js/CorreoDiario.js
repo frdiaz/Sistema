@@ -27,19 +27,17 @@ $(document).ready(function () {
 });
 
 function mostrarAlerta(numeroAlerta, mensaje) {
-    if(numeroAlerta == 1)
-    {
+    if (numeroAlerta == 1) {
         $.toast({
             heading: 'Información',
             text: mensaje,
             hideAfter: 5000,
             icon: 'info',
-            loader: true,    
-            loaderBg: '#9EC600'  
+            loader: true,
+            loaderBg: '#9EC600'
         });
     }
-    else if (numeroAlerta == 2)
-    {
+    else if (numeroAlerta == 2) {
         $.toast({
             heading: 'Éxito',
             text: mensaje,
@@ -49,8 +47,7 @@ function mostrarAlerta(numeroAlerta, mensaje) {
             loaderBg: '#32CD32'
         });
     }
-    else if (numeroAlerta == 3)
-    {
+    else if (numeroAlerta == 3) {
         $.toast({
             heading: 'Error',
             text: mensaje,
@@ -127,6 +124,7 @@ function listaMensajesEnviados() {
             if (arg.d == "{}" | arg.d == "") {
                 return;
             }
+
             var objeto = arg.d;
             for (var i = 0; i < objeto.length; i++) {
                 informe.fnAddData([

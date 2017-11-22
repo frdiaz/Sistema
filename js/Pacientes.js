@@ -4,8 +4,11 @@ var id_PacienteFichaNutricional;
 var id_Ficha;
 var id_actulizarFicha = 0;
 var id_fichaAnterior = 0;
+var edad = 0;
+
 $(document).ready(function () {
     ocultarTodo();
+    calcularDiagnostico();
     informe = $('#tblPacientes').dataTable({
         language: {
             url: 'bower_components/datatables/locale/es_ES.txt'
@@ -143,16 +146,16 @@ function historial(id_paciente) {
             }
             var numero = 0;
             var objeto = arg.d;
-            
+
             for (var i = objeto.length; i > 0; i--) {
                 numero++;
                 completa.fnAddData([
                     numero,
-                    objeto[i-1].fecha,
-                    objeto[i-1].peso,
-                    objeto[i-1].talla,
-                    objeto[i-1].cintura,
-                    objeto[i-1].imc
+                    objeto[i - 1].fecha,
+                    objeto[i - 1].peso,
+                    objeto[i - 1].talla,
+                    objeto[i - 1].cintura,
+                    objeto[i - 1].imc
                 ]);
             }
             cargarGrafico(objeto);
@@ -182,36 +185,53 @@ function cargarGrafico(objeto) {
     fechaObjeto.fecha4 = "";
     fechaObjeto.fecha5 = "";
     fechaObjeto.fecha6 = "";
-    
+
+    var cinturaObjeto = new Object();
+
+    cinturaObjeto.cintura1 = "";
+    cinturaObjeto.cintura2 = "";
+    cinturaObjeto.cintura3 = "";
+    cinturaObjeto.cintura4 = "";
+    cinturaObjeto.cintura5 = "";
+    cinturaObjeto.cintura6 = "";
+
     var i = 0;
     var cantidad = 0;
     var a = 0;
 
     for (i = objeto.length; i > 0; i--) {
         var numero = objeto[i - 1].peso;
+        var cintura = objeto[i - 1].cintura;
         var fecha = objeto[i - 1].fecha;
         numero = numero.replace(",", ".");
         if (cantidad == 0) {
             valorObjeto.seis = numero;
             fechaObjeto.fecha6 = fecha;
+            cinturaObjeto.cintura6 = cintura;
         } else if (cantidad == 1) {
             valorObjeto.cinco = numero;
             fechaObjeto.fecha5 = fecha;
+            cinturaObjeto.cintura5 = cintura;
         } else if (cantidad == 2) {
             valorObjeto.cuatro = numero;
             fechaObjeto.fecha4 = fecha;
+            cinturaObjeto.cintura4 = cintura;
         } else if (cantidad == 3) {
             valorObjeto.tres = numero;
             fechaObjeto.fecha3 = fecha;
+            cinturaObjeto.cintura3 = cintura;
         } else if (cantidad == 4) {
             valorObjeto.dos = numero;
             fechaObjeto.fecha2 = fecha;
+            cinturaObjeto.cintura2 = cintura;
         } else if (cantidad == 5) {
             valorObjeto.uno = numero;
             fechaObjeto.fecha1 = fecha;
+            cinturaObjeto.cintura1 = cintura;
         }
         cantidad++;
     }
+
 
     Highcharts.chart('container', {
         title: {
@@ -222,7 +242,7 @@ function cargarGrafico(objeto) {
         //},
         yAxis: {
             title: {
-                text: 'Peso'
+                text: 'Peso en Kilogramos'
             }
         },
         legend: {
@@ -237,13 +257,53 @@ function cargarGrafico(objeto) {
         //        },
         //        pointStart: 2010
         //    }
-        //},
+        //}, + "Kg"
         xAxis: {
             categories: [fechaObjeto.fecha1, fechaObjeto.fecha2, fechaObjeto.fecha3, fechaObjeto.fecha4, fechaObjeto.fecha5, fechaObjeto.fecha6]
         },
         series: [{
             name: 'Peso',
             data: [[parseFloat(valorObjeto.uno)], [parseFloat(valorObjeto.dos)], [parseFloat(valorObjeto.tres)], [parseFloat(valorObjeto.cuatro)], [parseFloat(valorObjeto.cinco)], [parseFloat(valorObjeto.seis)]]
+        }, {
+            name: 'Cintura',
+            data: [[parseFloat(cinturaObjeto.cintura1)], [parseFloat(cinturaObjeto.cintura2)], [parseFloat(cinturaObjeto.cintura3)], [parseFloat(cinturaObjeto.cintura4)], [parseFloat(cinturaObjeto.cintura5)], [parseFloat(cinturaObjeto.cintura6)]]
+        }],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+    });
+
+    Highcharts.chart('container2', {
+        title: {
+            text: 'Resumen de Cintura'
+        },
+        yAxis: {
+            title: {
+                text: 'Cintura en Centimetros'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+        xAxis: {
+            categories: [fechaObjeto.fecha1, fechaObjeto.fecha2, fechaObjeto.fecha3, fechaObjeto.fecha4, fechaObjeto.fecha5, fechaObjeto.fecha6]
+        },
+        series: [{
+            name: 'Cintura',
+            data: [[parseFloat(cinturaObjeto.cintura1)], [parseFloat(cinturaObjeto.cintura2)], [parseFloat(cinturaObjeto.cintura3)], [parseFloat(cinturaObjeto.cintura4)], [parseFloat(cinturaObjeto.cintura5)], [parseFloat(cinturaObjeto.cintura6)]]
         }],
         responsive: {
             rules: [{
@@ -574,13 +634,44 @@ function datosPrincipales(id) {
             var objeto = arg.d;
             for (var i = 0; i < objeto.length; i++) {
                 document.getElementById('lblResumenNombre').innerText = 'Nombre: ' + objeto[i].nombre + ' ' + objeto[i].apellidoPaterno + ' ' + objeto[i].apellidoMaterno,
-                document.getElementById('lblResumenEdad').innerText = 'Edad: ' + objeto[i].edad + ' años'
+                document.getElementById('lblResumenEdad').innerText = 'Edad: ' + objeto[i].edad + ' años',
+                edad = objeto[i].edad
             }
         },
         error: function () {
 
         }
     });
+}
+
+function calcularDiagnostico() {
+    var imc = document.getElementById('txtIMC').value;
+    imc = parseFloat(imc);
+
+    if (edad > 0 && imc > 0) {
+        if (edad > 17 && edad < 65) {
+            if (imc < parseFloat('18,5')) {
+                document.getElementById('txtDiagnostico').value = "Bajo Peso";
+                console.log("1");
+            } else if (imc > parseFloat('18,4') && imc < parseFloat('25')) {
+                document.getElementById('txtDiagnostico').value = "Normal";
+                console.log("2");
+            } else if (imc < parseFloat('30')) {
+                document.getElementById('txtDiagnostico').value = "Sobre Peso";
+                console.log("3");
+            } else if (imc >= parseFloat('30') && imc <= parseFloat('34,9')) {
+                document.getElementById('txtDiagnostico').value = "Obesidad Moderada";
+                console.log("4");
+            } else if (imc >= parseFloat('35') && imc <= parseFloat('40')) {
+                document.getElementById('txtDiagnostico').value = "Obesidad Severa";
+                console.log("4");
+            } else if (imc > parseFloat('40')) {
+                document.getElementById('txtDiagnostico').value = "Obesidad Morbida";
+                console.log("5");
+            }
+        }
+    }
+    setTimeout('calcularDiagnostico()', 1000);
 }
 
 function detalleFicha(id_Ficha) {
@@ -621,7 +712,6 @@ function detalleFicha(id_Ficha) {
 
         }
     });
-
 }
 
 function ocultarDetalleFicha() {
