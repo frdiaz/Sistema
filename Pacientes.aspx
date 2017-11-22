@@ -92,7 +92,6 @@
                         </div>
                         <div class="form-group">
                             <label>Correo Electronico</label>
-                            <label style="color: red">(*)</label>
                             <input type="text" class="form-control" id="txtEmail" placeholder="Email" maxlength="29">
                         </div>
                         <div class="form-group">
@@ -158,7 +157,6 @@
                         </div>
                         <div class="form-group">
                             <label>Correo Electronico</label>
-                            <label style="color: red">(*)</label>
                             <input type="text" class="form-control" id="txtEmailEditar" placeholder="Email" maxlength="29">
                         </div>
                         <div class="box-footer">
@@ -335,15 +333,23 @@
     <section class="content">
         <div class="historico">
             <div id="dvVerHistorico">
-                <div class="row" id="dvHistorico">
-                    <div class="col-md-12">
+                <div class="col">
+                    <div class="col-md-6">
                         <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Datos Historicos</h3>
-                            </div>
-                            <div id="container2" style="width:50% !important; margin-right:0px;"></div>
-                            <div id="container" style="width:50% !important; margin-left:0px;"></div>
-                            
+                            <div id="container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-md-6">
+                        <div class="box box-info">
+                            <div id="container2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Tabla con todos los datos</h3>
                             </div>
@@ -359,8 +365,6 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <br />
-                            <br />
                         </div>
                     </div>
                 </div>

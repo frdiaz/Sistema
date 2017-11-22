@@ -17,7 +17,7 @@ public partial class Pacientes : System.Web.UI.Page
     }
 
     #region metodos
-    
+
     [WebMethod]
     public static ArrayList cargarTablaPacientes()
     {
@@ -84,7 +84,7 @@ public partial class Pacientes : System.Web.UI.Page
         ArrayList mensajes = new ArrayList();
 
         procesaEditarPacientes(mensajes, id);
-        
+
         return mensajes;
     }
 
@@ -111,10 +111,12 @@ public partial class Pacientes : System.Web.UI.Page
                 int sexo = item["sexo"].ToString() == "True" ? 1 : 0;
                 string fono = item["fono"].ToString() != "0" ? item["fono"].ToString() : "";
                 string email = item["email"].ToString();
-                string edad = Convert.ToString(DateTime.Today.AddTicks(-fecha.Ticks).Year - 1);
-
-                //CALCULA LA EDAD
-                //int edad = DateTime.Today.AddTicks(-fecha.Ticks).Year - 1; 
+                string edad = "0";
+                try
+                {
+                    edad = Convert.ToString(DateTime.Today.AddTicks(-fecha.Ticks).Year - 1);
+                }
+                catch (Exception ex) { }
                 mensajes.Add(new { id = id, rut = rut, nombre = nombre, apellidoPaterno = apellidoPaterno, apellidoMaterno = apellidoMaterno, fechaNacimiento = fechaNacimiento, sexo = sexo, fono = fono, email = email, edad = edad });
             }
         }
@@ -170,7 +172,7 @@ public partial class Pacientes : System.Web.UI.Page
         fichaNutricional.FechaRegistro = DateTime.Now;
         fichaNutricional.Indicaciones = indicaciones;
 
-        if(fichaNutricional.Id > 0)
+        if (fichaNutricional.Id > 0)
         {
             resultado = metodosFichaNutricional.updateFicha(fichaNutricional);
             ultimo = fichaNutricional.Id;
@@ -178,7 +180,7 @@ public partial class Pacientes : System.Web.UI.Page
         else
         {
             resultado = metodosFichaNutricional.insertarFicha(fichaNutricional);
-            if(resultado)
+            if (resultado)
             {
                 ultimo = metodosFichaNutricional.obtenerIDFichaInsertada(fichaNutricional);
             }
@@ -284,7 +286,7 @@ public partial class Pacientes : System.Web.UI.Page
             {
                 int id = Convert.ToInt32(item["id"]);
                 string fechaRegistro = item["fechaRegistro"].ToString();
-                string peso = item["peso"].ToString().Replace(",",".");
+                string peso = item["peso"].ToString().Replace(",", ".");
                 string talla = item["talla"].ToString().Replace(",", ".");
                 string cintura = item["cintura"].ToString().Replace(",", ".");
                 string imc = item["imc"].ToString();

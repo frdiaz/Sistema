@@ -170,12 +170,12 @@ function historial(id_paciente) {
 function cargarGrafico(objeto) {
     var valorObjeto = new Object();
 
-    valorObjeto.uno = "0";
-    valorObjeto.dos = "0";
-    valorObjeto.tres = "0";
-    valorObjeto.cuatro = "0";
-    valorObjeto.cinco = "0";
-    valorObjeto.seis = "0";
+    valorObjeto.uno = "";
+    valorObjeto.dos = "";
+    valorObjeto.tres = "";
+    valorObjeto.cuatro = "";
+    valorObjeto.cinco = "";
+    valorObjeto.seis = "";
 
     var fechaObjeto = new Object();
 
@@ -264,10 +264,12 @@ function cargarGrafico(objeto) {
         series: [{
             name: 'Peso',
             data: [[parseFloat(valorObjeto.uno)], [parseFloat(valorObjeto.dos)], [parseFloat(valorObjeto.tres)], [parseFloat(valorObjeto.cuatro)], [parseFloat(valorObjeto.cinco)], [parseFloat(valorObjeto.seis)]]
-        }, {
-            name: 'Cintura',
-            data: [[parseFloat(cinturaObjeto.cintura1)], [parseFloat(cinturaObjeto.cintura2)], [parseFloat(cinturaObjeto.cintura3)], [parseFloat(cinturaObjeto.cintura4)], [parseFloat(cinturaObjeto.cintura5)], [parseFloat(cinturaObjeto.cintura6)]]
-        }],
+        },
+        //{
+        //    name: 'Cintura',
+        //    data: [[parseFloat(cinturaObjeto.cintura1)], [parseFloat(cinturaObjeto.cintura2)], [parseFloat(cinturaObjeto.cintura3)], [parseFloat(cinturaObjeto.cintura4)], [parseFloat(cinturaObjeto.cintura5)], [parseFloat(cinturaObjeto.cintura6)]]
+        //}
+        ],
         responsive: {
             rules: [{
                 condition: {
@@ -394,6 +396,7 @@ function nuevoPaciente() {
                     ocultarTodo();
                     Pacientes_show();
                     cargarPacientes();
+                    vaciarCampos();
                 }
                 else {
                     mostrarAlerta(3, 'Paciente NO Creado');
@@ -407,6 +410,18 @@ function nuevoPaciente() {
     else {
         mostrarAlerta(3, "Faltan campos por completar");
     }
+}
+
+function vaciarCampos()
+{
+    document.getElementById('txtRut').value = "";
+    document.getElementById('txtNombre').value = "";
+    document.getElementById('txtApellidoPaterno').value = "";
+    document.getElementById('txtApellidoMaterno').value = "";
+    document.getElementById('txtFechaNacimiento').value = "";
+    document.getElementById('slSexo').value = "";
+    document.getElementById('txtEmail').value = "";
+    document.getElementById('txtFono').value = "";
 }
 
 function cargarTablaResumen(id_paciente) {
@@ -479,6 +494,7 @@ function insertarFichaNutricional() {
                     mostrarAlerta(2, 'Ficha Insertada');
                     cargarTablaResumen(id_PacienteFichaNutricional);
                     id_actulizarFicha = respuesta;
+                    //Pacientes_show();
                 }
                 else {
                     mostrarAlerta(3, 'Ficha NO Insertada');
@@ -798,7 +814,7 @@ function borrarDatos() {
 
 function guardarYCerrar() {
     insertarFichaNutricional();
-    Pacientes_show();
+    //Pacientes_show();
     id_actulizarFicha = 0;
 }
 
