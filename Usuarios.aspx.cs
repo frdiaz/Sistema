@@ -109,7 +109,7 @@ public partial class Usuarios : System.Web.UI.Page
             {
                 int id = Convert.ToInt32(item["id_usuario"]);
                 string rut = item["rut"].ToString();
-                string nombre = item["nombre"].ToString() + " " + item["apellidoPaterno"].ToString() + " " + item["apellidoPaterno"].ToString();
+                string nombre = item["nombre"].ToString() + " " + item["apellidoPaterno"].ToString() + " " + item["apellidoMaterno"].ToString();
                 string email = item["email"].ToString();
                 string activo = "";
 

@@ -194,7 +194,7 @@ function nuevaVentana() {
 
         $.ajax({
             type: "POST",
-            url: "Ventanas.aspx/nuevaVentana",
+            url: "Paginas.aspx/nuevaVentana",
             contentType: "application/json; charset=utf-8",
             datatype: "jason",
             data: data,

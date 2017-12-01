@@ -39,6 +39,7 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
                     {
                         cargarDatosPrincipales();
                         cargarMenus();
+                        cargarOpciones(Convert.ToInt32(Session["idUsuario"]));
                         hf_idUsuario.Value = Convert.ToString(Session["idUsuario"]);
                         btnSalir.Click += BtnSalir_Click;
                     }
@@ -171,6 +172,31 @@ public partial class pages_MasterPage : System.Web.UI.MasterPage
             {
                 lblNombre1.Text = item["Nombre"].ToString();
                 lblNombre2.Text = item["Nombre"].ToString() + " - " + item["Rol"].ToString();
+            }
+        }
+    }
+
+    private void cargarOpciones(int id_usuario)
+    {
+        DataSet ds = new DataSet();
+        MetodosTabOpciones metodosOpciones = new MetodosTabOpciones();
+        Tab_opciones opciones = new Tab_opciones();
+
+        opciones.Id_usuario = id_usuario;
+        ds = metodosOpciones.obtenerOpciones(opciones);
+
+        if (ds != null)
+        {
+            foreach (DataRow item in ds.Tables[0].Rows)
+            {
+                if(Convert.ToInt32(item["id_tipoOpcion"]) == 1)
+                {
+
+                }
+                else if (Convert.ToInt32(item["id_tipoOpcion"]) == 2)
+                {
+
+                }
             }
         }
     }
